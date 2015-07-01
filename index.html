@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+	<meta charset="utf-8">
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Woningmarkt - SotS</title>
+
+	<!-- ADD ALL SOTS HTML FRAGMENTS CSS HERE -->
+	
+	<!-- D3.js -->
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+	
+	<!-- jQuery -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" href="css/sots_style.css">
+	
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:700,400,300' rel='stylesheet' type='text/css'>
+	<style>
+		body {
+		  font-family: 'Open Sans', sans-serif;
+		  font-size: 10px;
+		  font-weight: 400;
+		  color: #969696;
+		}	
+	</style>
+</head>
+
+<body>
+
+	<!-- SotS HTML WoningMarkt Scatterplot Section -->
+	<div class = "sotsVisualWrapper">
+		<div id="cont" class="container-fluid">
+		
+		<div class="row text-center">
+            <div class="col-md-8 col-md-offset-2">
+                <div style="font-size: 14px; color: #8F8F8F; padding-bottom: 10px; padding-top: 10px;">
+					In circa de helft van de gemeenten met grootste transformatiepotentie in m<sup>2</sup> biedt de huidige (harde en zachte) plancapaciteit voldoende ruimte voor uitbreiding met de gesignaleerde transformatiepotentie 
+				</div>
+            </div>
+        </div>
+		<div class="row text-center">
+			<div class="col-md-12">
+				<div class="dataresource scatter"></div>
+			</div>
+		</div>
+			
+			<div class="row text-center">
+				<div class="col-md-12">
+					<div style="color: #6E6E6E; font-size: 12px; padding-bottom: 10px;">Selecteer een optie om de ordening van huishoudensgroei aan te passen</div>
+					<div class="btn-group btn-group-sm" data-toggle="buttons">
+						<label id="totalButton" class="btn btn-default active"><input type="radio" class="btn-options">Percentueel</label>
+						<label id="housesButton" class="btn btn-default"><input type="radio" class="btn-options">Absoluut</label>
+					</div>
+				</div>
+			</div>
+			<div class="row text-center">
+				<div class="col-md-12">
+					<div class="legendTitle" style="font-size: 9px; padding-top: 30px;">NB: Voor de 27 steden met de hoogste m<sup>2</sup> aan transformatiepotentie | Deze getallen slaan op harde en zachte plancapaciteit</div>
+					<div class="legendTitle" style="font-size: 9px; padding-top: 5px;">Bron: Planbureau voor de Leefomgeving 2013, Kantoren in cijfers 2014 NVM en Drs. R.L. Bak, Voorradprognoses en woonvisies via provinciale websites 2015</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- ADD ALL SOTS HTML FRAGMENTS JS HERE -->
+	<!-- Needed for all -->
+	<script src="js/sots_woning_general.min.js"></script>
+	<!-- Needed for scatter plots -->
+	<script src="js/sots_woning_connected_scatter.min.js"></script>
+
+
+</body>
+</html>
+ 
