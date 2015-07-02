@@ -431,17 +431,14 @@ function initiateScatter(data, width, height, margin) {
 	scatterChart.append("g")
 		.attr("class", "x axis")
 		.attr("transform", "translate(" + 0 + "," + (height + 25) + ")")
-		.call(xAxis);
-		
-	//Set the scale for the bubble size
-	var rScale = d3.scale.sqrt()
-		.range([0, 20])
-		.domain([0, d3.max(data, function(d) {return d.houses_need;})]);		
+		.call(xAxis);	
 				
 	////////////////////////////////////////////////////////////	
 	//////////////////// Connecting Lines //////////////////////
 	////////////////////////////////////////////////////////////					
 
+	var radiusCircles = mobileScreen ? 2 : 5;
+	
 	//Lines behind the entire chart width
 	scatterElement.append("line")
 				.attr("class", "backgroundLine")
@@ -455,8 +452,8 @@ function initiateScatter(data, width, height, margin) {
 	scatterElement.append("line")
 				.attr("class", "connectLine")
 				.style("opacity", 0.6)
-				.attr("x1", function(d) {return xScale(d.perc_planning) + 5;})
-				.attr("x2", function(d) {return xScale(d.perc_total) - 5;})
+				.attr("x1", function(d) {return xScale(d.perc_planning) + radiusCircles;})
+				.attr("x2", function(d) {return xScale(d.perc_total) - radiusCircles;})
 				.attr("y1", 0)
 				.attr("y2", 0);
 				
@@ -471,8 +468,7 @@ function initiateScatter(data, width, height, margin) {
 				.style("fill", "#8C8C8C")
 				.attr("cx", function(d) {return xScale(d.perc_planning);})
 				.attr("cy", 0)
-				.attr("r", 5);
-				//.attr("r", function(d) {return rScale();});
+				.attr("r", radiusCircles);
 
 	//Planning+transformation circles
 	scatterElement.append("circle")
@@ -481,8 +477,7 @@ function initiateScatter(data, width, height, margin) {
 				.style("fill", "#81BC00")
 				.attr("cx", function(d) {return xScale(d.perc_total);})
 				.attr("cy", 0)
-				.attr("r", 5);
-				//.attr("r", function(d) {return rScale();});
+				.attr("r", radiusCircles);
 
 	////////////////////////////////////////////////////////////	
 	//////////////////// Scatterplot Labels ////////////////////
