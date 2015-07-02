@@ -1,11 +1,11 @@
 ///////////////////////////////////////////////////////////////////////////
 //////////////////////// Initiate Scatter plot  ///////////////////////////
 ///////////////////////////////////////////////////////////////////////////
+var mobileScreen = ($(window).width() > 400 ? false : true);
+
 var scatterMargin = {left: 30, top: 20, right: 40, bottom: 100},
 	scatterWidth = Math.min($(window).width(),900) - scatterMargin.left - scatterMargin.right,
-	scatterHeight = Math.min(700, $(window).height() - 120) - scatterMargin.top - scatterMargin.bottom;
-
-var mobileScreen = ($(window).width() > 400 ? false : true);
+	scatterHeight = (mobileScreen ? 500 : 700) - scatterMargin.top - scatterMargin.bottom;
 	
 //Potentie
 var svgScatter = d3.select(".dataresource.scatter").append("svg")
@@ -602,7 +602,7 @@ function initiateScatter(data, width, height, margin) {
 	
 	//Create a wrapper for the circle legend				
 	var legendCircle = scatterChart.append("g").attr("class", "legendWrapper")
-					.attr("transform", "translate(" + (width/2) + "," + (scatterMargin.top*1/3) +")");
+					.attr("transform", "translate(" + (width/2) + "," + 1 +")");
 	
 	//The grey circle
 	legendCircle.append("text")
