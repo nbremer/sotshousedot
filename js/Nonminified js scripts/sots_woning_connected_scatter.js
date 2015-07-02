@@ -537,7 +537,7 @@ function initiateScatter(data, width, height, margin) {
 		.append("text")
 		.attr("class", "x axis label")
 		.attr("text-anchor", "middle")
-		.attr("transform", "translate(" + ((width+barChartWidth)/2) + "," + (height + 80) + ")")
+		.attr("transform", "translate(" + ((width+barChartWidth)/2) + "," + (height + 90) + ")")
 		.style("font-size", mobileScreen ? "9px" : "11px")
 		.attr("x", 0)
 		.attr("y", 0)
@@ -555,7 +555,7 @@ function initiateScatter(data, width, height, margin) {
 		.attr("x", 0)
 		.attr("y", 0)
 		.attr("dy", "0em")
-		.text("Percentueel")
+		.text(mobileScreen ? "Percentueel" : "Percentueel - Welk deel van de groei kan de plancapaciteit opvangen")
 		.call(wrap, (width-moveToRight-barChartWidth)*0.9);
 		
 	//Create the g group to hold the data
@@ -571,12 +571,6 @@ function initiateScatter(data, width, height, margin) {
 		.style("shape-rendering", "crispEdges")
 		.style("stroke-dasharray", "2 2")
 		.style("pointer-events", "none");	
-	//The word above the line
-	//medianLine.append("text")
-	//	.attr("class","legendText")
-	//	.attr("transform", "translate(" + (5) + "," + (8) + ")")
-	//	.style("text-anchor", "start")
-	//	.text("Gemiddelde");	
 
 	//Set up bar chart axis label
 	scatterChart.append("g")
