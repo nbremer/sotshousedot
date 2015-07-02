@@ -2,9 +2,11 @@
 //////////////////////// Initiate Scatter plot  ///////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 var scatterMargin = {left: 30, top: 20, right: 40, bottom: 100},
-	scatterWidth = Math.min($(".dataresource.scatter").width(),900) - scatterMargin.left - scatterMargin.right,
-	scatterHeight = Math.min(700, Math.max(500, $(window).height() - 120)) - scatterMargin.top - scatterMargin.bottom;
+	scatterWidth = Math.min($(window).width(),900) - scatterMargin.left - scatterMargin.right,
+	scatterHeight = Math.min(700, $(window).height() - 120) - scatterMargin.top - scatterMargin.bottom;
 
+var mobileScreen = ($(window).width() > 400 ? false : true);
+	
 //Potentie
 var svgScatter = d3.select(".dataresource.scatter").append("svg")
 		.attr("width", (scatterWidth + scatterMargin.left + scatterMargin.right))
@@ -405,7 +407,7 @@ var gemeentesPlanning = [
 
 function initiateScatter(data, width, height, margin) {
 
-	var moveToRight = 80,
+	var moveToRight = mobileScreen ? 55 : 80,
 		barChartWidth = Math.min(220, (width-moveToRight)*0.25);
 	
 	//////////////////////////////////////////////////////
@@ -421,7 +423,7 @@ function initiateScatter(data, width, height, margin) {
 	//Set new x-axis	
 	var xAxis = d3.svg.axis()
 		.orient("bottom")
-		.ticks(6)
+		.ticks(mobileScreen ? 3 : 6)
 		.scale(xScale)
 		.tickFormat(numFormatPercent);	
 
@@ -490,7 +492,7 @@ function initiateScatter(data, width, height, margin) {
 	scatterElement.append("text")
 				.attr("class", "legendTitle")
 				.style("text-anchor", "end")	
-				.style("font-size", "12px")
+				.style("font-size", mobileScreen ? "9px" : "12px")
 				.attr("x", xScale(0) - 10)
 				.attr("y", 0)
 				.attr("dy", "0.35em")
@@ -512,9 +514,9 @@ function initiateScatter(data, width, height, margin) {
 	//Create the bar scale axis	
 	var barAxis = d3.svg.axis()
 		.orient("bottom")
-		.ticks(2)
+		.ticks(3)
 		.scale(barScale)
-		.tickFormat(NLformat);	
+		.tickFormat(mobileScreen ? d3.format(",s") : NLformat);	
 
 	//Append the bar scale axis
 	scatterChart.append("g")
@@ -535,17 +537,30 @@ function initiateScatter(data, width, height, margin) {
 	////////////// Initialize Axis Texts /////////////////
 	//////////////////////////////////////////////////////	
 	
+	//Set up X axis label - below
+	scatterChart.append("g")
+		.append("text")
+		.attr("class", "x axis label")
+		.attr("text-anchor", "middle")
+		.attr("transform", "translate(" + ((width+barChartWidth)/2) + "," + (height + 80) + ")")
+		.style("font-size", mobileScreen ? "9px" : "11px")
+		.attr("x", 0)
+		.attr("y", 0)
+		.attr("dy", "0em")
+		.text("Verwachte huishoudensgroei tot 2025")
+		.call(wrap, (width+barChartWidth)*0.9);
+		
 	//Set up X axis label
 	scatterChart.append("g")
 		.append("text")
 		.attr("class", "x axis label")
 		.attr("text-anchor", "middle")
 		.attr("transform", "translate(" + (moveToRight + (width-moveToRight-barChartWidth)/2) + "," + (height + 60) + ")")
-		.style("font-size", "10px")
+		.style("font-size", mobileScreen ? "8px" : "10px")
 		.attr("x", 0)
 		.attr("y", 0)
 		.attr("dy", "0em")
-		.text("Percentage van verwachte huishoudensgroei tot 2025")
+		.text("Percentueel")
 		.call(wrap, (width-moveToRight-barChartWidth)*0.9);
 		
 	//Create the g group to hold the data
@@ -574,12 +589,12 @@ function initiateScatter(data, width, height, margin) {
 		.attr("class", "bar chart label")
 		.attr("text-anchor", "middle")
 		.attr("transform", "translate(" + (barStart + barChartWidth/2) + "," + (height + 60) + ")")
-		.style("font-size", "10px")
+		.style("font-size", mobileScreen ? "8px" : "10px")
 		.attr("x", 0)
 		.attr("y", 0)
 		.attr("dy", "0em")
-		.text("Verwachte huishoudensgroei tot 2025 (absoluut)")
-		.call(wrap, barChartWidth*0.9);
+		.text("Absoluut")
+		.call(wrap, barChartWidth*0.95);
 		
 	//////////////////////////////////////////////////////
 	///////////////// Initialize Legend //////////////////
@@ -587,7 +602,7 @@ function initiateScatter(data, width, height, margin) {
 	
 	//Create a wrapper for the circle legend				
 	var legendCircle = scatterChart.append("g").attr("class", "legendWrapper")
-					.attr("transform", "translate(" + (width/2) + "," + (scatterMargin.top/2) +")");
+					.attr("transform", "translate(" + (width/2) + "," + (scatterMargin.top*1/3) +")");
 	
 	//The grey circle
 	legendCircle.append("text")
@@ -611,7 +626,8 @@ function initiateScatter(data, width, height, margin) {
 		.attr("y", 0)
 		.attr("dy", "0.35em")
 		.style("text-anchor", "start")
-		.text("Plancapaciteit incl. transformatiepotentie");
+		.text("Plancapaciteit incl. transformatiepotentie")
+		.call(wrap, mobileScreen ? 90 : 200);
 	legendCircle.append("circle")
         .attr('r', 5)
         .attr('cx', 10)
@@ -644,17 +660,6 @@ d3.select("#totalButton").on("click", function(d){
 				.transition().duration(1000)
 				.attr("transform", function(d, i) {return "translate(0," + yScaleScatter(d.orderTotal - 1) + ")" ;})
 });
-/*
-d3.select("#transButton").on("click", function(d){ 
-		scatterChart.selectAll(".wrappingElement")
-				.transition().duration(1000)
-				.attr("transform", function(d, i) {return "translate(0," + yScaleScatter(d.orderTrans - 1) + ")" ;})
-});
-d3.select("#planButton").on("click", function(d){ 
-		scatterChart.selectAll(".wrappingElement")
-				.transition().duration(1000)
-				.attr("transform", function(d, i) {return "translate(0," + yScaleScatter(d.orderPlan - 1) + ")" ;})
-});*/
 d3.select("#housesButton").on("click", function(d){ 
 		scatterChart.selectAll(".wrappingElement")
 				.transition().duration(1000)
